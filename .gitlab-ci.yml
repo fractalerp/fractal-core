@@ -1,0 +1,60 @@
+image: docker:git
+
+services:
+    - name: docker:19.03-dind
+      alias: docker
+
+variables:
+    BRANCH: master
+    REGISTRY: registry.digitalocean.com/fractal-registry/fractal-app
+    TEST_IMAGE: $REGISTRY/development
+    RELEASE_IMAGE: $REGISTRY/production
+    KUBE_CONTEXT: "fractal/gitlab-agent:primary-agent"
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+
+cache:
+    paths:
+        - node_modules/
+
+before_script:
+    - REV=$(git rev-parse HEAD)
+
+stages:
+    - build
+    - test
+    - release
+    - deploy
+
+release:
+    stage: release
+    script:
+        - echo "Creating release..."
+        - docker login -u ${LOGIN_TOKEN} -p ${LOGIN_TOKEN} registry.digitalocean.com
+        - echo "Login successfull"
+        - echo "Building production ready dockerfile application..."
+        - chmod +x setup_prod_env.sh
+        - sh setup_prod_env.sh
+        - docker build --pull -t $RELEASE_IMAGE:latest .
+        - echo "Pushing the docker image to registry with name $RELEASE_IMAGE:latest"
+        - docker push $RELEASE_IMAGE:latest
+        - echo "Released pushed to registry"
+    only:
+        - main
+
+deploy:
+    stage: deploy
+    image: dtzar/helm-kubectl
+    before_script:
+        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+        - apk update && apk add bash
+        - apk update && apk add gettext
+    script:
+#        - kubectl config use-context "$KUBE_CONTEXT"
+        - kubectl config get-contexts
+        - kubectl config use-context fractal/gitlab-agent:primary-agent
+        # Deploy to digital ocean
+        - kubectl apply --validate=false -f devops/.digital_ocean/manifest.yaml
+        - kubectl rollout restart deployment.apps/fractal-app
+    only:
+        - main

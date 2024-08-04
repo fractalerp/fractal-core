@@ -1,0 +1,65 @@
+# Backend: DigitalOcean Kubernetes
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: fractal-lb
+    annotations:
+        service.beta.kubernetes.io/do-loadbalancer-hostname: "app.fractal.com"
+        service.beta.kubernetes.io/do-loadbalancer-name: "app.fractal.com"
+        service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
+        service.beta.kubernetes.io/do-loadbalancer-certificate-id: "4e123483-a806-4d22-ade6-00d123458f5f"
+spec:
+    type: LoadBalancer
+    ports:
+        - name: http
+          port: 80
+          targetPort: 3000
+          protocol: TCP
+        - name: https
+          port: 443
+          targetPort: 3000
+          protocol: TCP
+    selector:
+        app: fractal-app
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+    name: fractal-app
+spec:
+    strategy:
+        type: RollingUpdate
+        rollingUpdate:
+            maxUnavailable: 25%
+            maxSurge: 25%
+    replicas: 2
+    selector:
+        matchLabels:
+            app: fractal-app
+    template:
+        metadata:
+            labels:
+                app: fractal-app
+        spec:
+            containers:
+                - name: fractal-app
+                  image: registry.digitalocean.com/fractal-registry/fractal-app/production:latest
+                  imagePullPolicy: Always
+                  ports:
+                      - containerPort: 3000
+                  livenessProbe:
+                      httpGet:
+                          path: /v1
+                          port: 3000
+                      initialDelaySeconds: 2
+                      periodSeconds: 2
+                  readinessProbe:
+                      httpGet:
+                          path: /v1
+                          port: 3000
+                      initialDelaySeconds: 2
+                      periodSeconds: 2
+
+---
