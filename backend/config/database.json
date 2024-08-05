@@ -1,0 +1,4 @@
+{
+  "adapter": "mongodb",
+  "url": "${DATABASE_CONNECTION_STRING}"
+}
