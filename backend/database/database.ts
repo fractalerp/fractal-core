@@ -28,7 +28,6 @@ export default class Database {
                     this.database = mongodb.database;
 
                     break;
-
             }
 
         } else {

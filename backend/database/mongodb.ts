@@ -14,7 +14,6 @@ export class MongoDB implements DatabaseConnectionInterface {
     }
 
     async connect(): Promise<void> {
-        // await mongoose.connect('your_mongodb_connection_string'); 
         let options = {
             retryWrites: true,
             ssl: true
