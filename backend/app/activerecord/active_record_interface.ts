@@ -1,4 +1,4 @@
-export interface DatabaseInterface<T> {
+export interface ActiveRecordInterface<T> {
     find(query: any): Promise<T[]>;
     findOne(query: any): Promise<T | null>;
     create(data: T): Promise<T>;

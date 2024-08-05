@@ -1,6 +1,6 @@
-import { DatabaseInterface } from "../../../database/database_interface";
+import { ActiveRecordInterface } from "../active_record_interface";
 
-export interface RelationalDatabaseInterface<T> extends DatabaseInterface<T> {
+export interface RelationalActiveRecordInterface<T> extends ActiveRecordInterface<T> {
     // Specific methods for relational databases
     query(sql: string, params?: any[]): Promise<any>;
     beginTransaction(): Promise<void>;
