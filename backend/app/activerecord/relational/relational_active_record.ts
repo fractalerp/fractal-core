@@ -1,14 +1,16 @@
 import { Sequelize, Model, QueryTypes } from 'sequelize';
 
-import { RelationalDatabaseInterface } from "./relational_database_interface";
+import { RelationalActiveRecordInterface } from "./relational_active_record_interface";
 
-export default class RelationalActiveRecord<T> implements RelationalDatabaseInterface<T> {
-    private sequelize: Sequelize;
+export class RelationalActiveRecord<T> implements RelationalActiveRecordInterface<T> {
+    private sequelize!: Sequelize;
     private model: typeof Model;
 
-    constructor(sequelize: Sequelize, model: typeof Model) {
-        this.sequelize = sequelize;
-        this.model = model;
+    constructor(modelName: string, schema: any) {
+        // TODO get sequilize instance
+        //this.sequelize = sequelize;
+        // @ts-ignore
+        this.model = this.sequelize.define(modelName, schema);
     }
 
     async find(query: any): Promise<T[]> {

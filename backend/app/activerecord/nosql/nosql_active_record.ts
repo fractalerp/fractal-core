@@ -1,11 +1,11 @@
 import mongoose, { Model, Schema } from 'mongoose';
-import { NoSQLDatabaseInterface } from "./nosql_database_interface";
+import { NoSQLActiveRecordInterface } from "./nosql_active_record_interface";
 
-export default class NoSqlActiveRecord<T> implements NoSQLDatabaseInterface<T> {
+export class NoSqlActiveRecord<T> implements NoSQLActiveRecordInterface<T> {
     private model: Model<T>;
 
-    constructor(modelName: string, schema: Schema) {
-        this.model = mongoose.model<T>(modelName, schema);
+    constructor(modelName: string, schema: {}) {
+        this.model = mongoose.model<T>(modelName, new Schema(schema));
     }
 
     async find(query: any): Promise<T[]> {
