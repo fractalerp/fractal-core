@@ -1,4 +1,4 @@
-import { ActiveRecord } from "./../activerecord/active_record";
+import { ActiveRecord } from "./../../activerecord";
 
 export class ActiveModel<T> extends ActiveRecord<T> {
 

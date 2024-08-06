@@ -1,8 +1,8 @@
 import { ActiveRecordInterface } from "./active_record_interface";
-import { DatabaseType } from '../../database/database_type';
+import { DatabaseType } from './database_type';
 import { NoSqlActiveRecord } from "./nosql/nosql_active_record";
 import { RelationalActiveRecord } from "./relational/relational_active_record";
-import { Messages } from "../../utils/messages"
+import { Messages } from "./utils/messages"
 
 export class ActiveRecord<T> implements ActiveRecordInterface<T> {
     private nosqlActiveRecord!: NoSqlActiveRecord<T>;
