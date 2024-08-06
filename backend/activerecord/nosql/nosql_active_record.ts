@@ -8,7 +8,7 @@ export class NoSqlActiveRecord<T> implements NoSQLActiveRecordInterface<T> {
 
   constructor(modelName: string, schema: SchemaProperty) {
 
-    // Cast past fractal schema to mongoose shema.
+    // Cast fractal schema to mongoose shema.
     // This is the basic implementation. TODO: we have create our own parser logic
     const mongoSchema = schema as ObtainDocumentType<SchemaProperty, T, ResolveSchemaOptions<DefaultSchemaOptions>>;
 
