@@ -4,7 +4,6 @@
     "declaration": false,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [ "ES2019", "dom" ],
     "module": "amd",
     "moduleResolution": "node",
     "noEmitOnError": true,
@@ -19,8 +18,7 @@
     "strict": true,
     "strictFunctionTypes": false,
     "skipLibCheck": true,
-    "target": "ES2019",
-    "types": [ "core-js" ],
+    "target": "es5",
     // "watch": false
   },
   "exclude": [

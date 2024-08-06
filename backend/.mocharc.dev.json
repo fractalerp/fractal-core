@@ -2,15 +2,25 @@
   "bail": true,
   "diff": true,
   "exit": false,
-  "extension": [ "ts" ],
+  "extension": [
+    "ts"
+  ],
   "full-trace": true,
   "package": "./package.json",
   "recursive": true,
   "reporter": "spec",
-  "require": [ "ts-node/register", "source-map-support/register" ],
+  "require": [
+    "ts-node/register"
+  ],
   "slow": 75,
-  "spec": "src/**/*.spec.ts",
+  "spec": [
+    "activerecord/**/*.spec.ts",
+    "app/**/*.spec.ts"
+  ],
   "timeout": 60000,
   "ui": "bdd",
-  "watch-files": [ "lib/**/*.js", "test/**/*.js" ]
+  "watch-files": [
+    "lib/**/*.js",
+    "test/**/*.js"
+  ]
 }

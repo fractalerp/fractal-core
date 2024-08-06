@@ -4,7 +4,6 @@
     "declaration": false,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [ "es2015", "dom" ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
@@ -20,7 +19,6 @@
     "strictFunctionTypes": false,
     "skipLibCheck": false,
     "target": "es5",
-    "types": [ "core-js" ],
     "watch": false
   },
   "exclude": [
