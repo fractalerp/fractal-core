@@ -15,9 +15,11 @@ describe("NoSqlActiveRecord", () => {
   });
 
   it("should find one document", async () => {
-    modelMock = mongoose.Model.findOne = sandbox
+    modelMock = sandbox
       .stub()
       .returns(Promise.resolve(userData));
+
+    mongoose.Model.findOne = modelMock;
 
     modelMock.resolves(userData);
 
