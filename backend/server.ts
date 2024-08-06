@@ -1,16 +1,20 @@
-import app from "./index";
 import { logger } from "./config/winston";
+import app from "./index";
 
 const port = process.env.PORT || 3000;
 
-console.error("Starting server...");
+logger.info("Starting server...");
+
 app.server.listen(port, () => {
-    // tslint:disable-next-line
-    console.log("Server started");
-    logger.info(`Fractal Express server listening on port ${port}.\nEnvironment: ${process.env.NODE_ENV}`);
+
+  logger.info(`Fractal Express server listening on port ${port}.\nEnvironment: ${process.env.NODE_ENV}`);
+
 }).on("error", (err: any) => {
-    console.error(err);
+
+  logger.error(err);
+
 }).on("close", () => {
-    // tslint:disable-next-line
-    console.log("Server closed");
+
+  logger.info("Server closed");
+
 });

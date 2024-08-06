@@ -1,4 +1,4 @@
 export const DatabaseType = {
-    NOSQL: "nosql",
-    RELATIONAL: "relational"
-}
+  NOSQL: "nosql",
+  RELATIONAL: "relational"
+};

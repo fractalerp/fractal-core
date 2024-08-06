@@ -1,9 +1,9 @@
 import { IRequestMeta } from "../../utils/interfaces";
 
 declare global {
-    namespace Express {
-        interface Request {
-            requestMeta: IRequestMeta;
-        }
+  namespace Express {
+    interface Request {
+      requestMeta: IRequestMeta;
     }
+  }
 }
