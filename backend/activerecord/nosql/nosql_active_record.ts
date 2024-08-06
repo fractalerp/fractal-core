@@ -1,11 +1,19 @@
-import mongoose, { Model, Schema } from "mongoose";
+import mongoose, { DefaultSchemaOptions, Model, ObtainDocumentType, ResolveSchemaOptions, Schema } from "mongoose";
+import { SchemaProperty } from "activerecord/@types/schema_property";
 import { NoSQLActiveRecordInterface } from "./nosql_active_record_interface";
 
 export class NoSqlActiveRecord<T> implements NoSQLActiveRecordInterface<T> {
   private model: Model<T>;
 
-  constructor(modelName: string, schema: Record<string, never>) {
-    this.model = mongoose.model<T>(modelName, new Schema(schema));
+
+  constructor(modelName: string, schema: SchemaProperty) {
+
+    // Cast fractal schema to mongoose shema.
+    // This is the basic implementation. TODO: we have create our own parser logic
+    const mongoSchema = schema as ObtainDocumentType<SchemaProperty, T, ResolveSchemaOptions<DefaultSchemaOptions>>;
+
+    // TODO; we have to remove any if our parser is complete
+    this.model = mongoose.model<T>(modelName, new Schema(mongoSchema as any));
   }
 
   async find(query: any): Promise<T[]> {
