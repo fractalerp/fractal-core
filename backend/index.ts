@@ -130,17 +130,17 @@ export class App {
     let REDIS_URL: string;
 
     switch (process.env.ENVIRONMENT) {
-    case Environments.TEST:
-      REDIS_URL = process.env.TEST_REDIS_URL as string;
-      break;
-    case Environments.PRODUCTION:
-      REDIS_URL = process.env.REDIS_URL as string;
-      break;
-    case Environments.DEVELOPMENT:
-      REDIS_URL = process.env.DEVELOPMENT_REDIS_URL as string;
-      break;
-    default:
-      REDIS_URL = process.env.TEST_REDIS_URL as string;
+      case Environments.TEST:
+        REDIS_URL = process.env.TEST_REDIS_URL as string;
+        break;
+      case Environments.PRODUCTION:
+        REDIS_URL = process.env.REDIS_URL as string;
+        break;
+      case Environments.DEVELOPMENT:
+        REDIS_URL = process.env.DEVELOPMENT_REDIS_URL as string;
+        break;
+      default:
+        REDIS_URL = process.env.TEST_REDIS_URL as string;
     }
     const redisUrl = REDIS_URL;
     this.redisClient = createClient({

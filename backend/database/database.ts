@@ -21,13 +21,13 @@ export default class Database {
       const databaseUrl = databaseOption.url;
 
       switch (adapter) {
-      case DatabaseAdapter.MONGODB:
-        const mongodb = new MongoDB(databaseUrl);
-        mongodb.connect();
+        case DatabaseAdapter.MONGODB:
+          const mongodb = new MongoDB(databaseUrl);
+          mongodb.connect();
 
-        this.database = mongodb.database;
+          this.database = mongodb.database;
 
-        break;
+          break;
       }
 
     } else {
