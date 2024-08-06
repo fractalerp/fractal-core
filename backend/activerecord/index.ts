@@ -1,8 +1,9 @@
 import { ActiveRecordInterface } from "./active_record_interface";
-import { DatabaseType } from "./database_type";
+import { DatabaseType } from "./@types/database_type";
 import { NoSqlActiveRecord } from "./nosql/nosql_active_record";
 import { RelationalActiveRecord } from "./relational/relational_active_record";
 import { Messages } from "./utils/messages";
+import { SchemaProperty } from "./@types/schema_property";
 
 export class ActiveRecord<T> implements ActiveRecordInterface<T> {
   private nosqlActiveRecord!: NoSqlActiveRecord<T>;
@@ -11,11 +12,11 @@ export class ActiveRecord<T> implements ActiveRecordInterface<T> {
   // TODO read database type from memory
   private databaseType = DatabaseType.NOSQL;
 
-  constructor(modelName: string, schema: Record<string, never>) {
+  constructor(modelName: string, schema: Record<string, SchemaProperty>) {
     if (this.databaseType === DatabaseType.NOSQL) {
-      this.nosqlActiveRecord = new NoSqlActiveRecord(modelName, schema);
+      this.nosqlActiveRecord = new NoSqlActiveRecord<T>(modelName, schema);
     } else {
-      this.relationalActiveRecord = new RelationalActiveRecord(modelName, schema);
+      this.relationalActiveRecord = new RelationalActiveRecord<T>(modelName, schema);
     }
   }
 
