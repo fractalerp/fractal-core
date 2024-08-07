@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
+import { fractalLogger } from "../config/logger";
 import { DatabaseConnectionInterface } from "./database_connection_interface";
-import { logger } from "./../config/winston";
 import { Environments } from "./../utils/constants";
 
 export class MongoDB implements DatabaseConnectionInterface {
@@ -28,7 +28,7 @@ export class MongoDB implements DatabaseConnectionInterface {
         options
       };
 
-      logger.info({
+      fractalLogger.info({
         dbQuery: set
       });
     });
@@ -36,7 +36,7 @@ export class MongoDB implements DatabaseConnectionInterface {
     // Do not log sensitive information in production
     if (process.env.ENVIRONMENT !== Environments.PRODUCTION) {
       mongoose.set("debug", (coll: any, method: any, query: any, doc: any, opts: any) => {
-        logger.info({
+        fractalLogger.info({
           dbQuery: {
             coll,
             method,

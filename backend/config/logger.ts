@@ -31,7 +31,7 @@ const options = {
   }
 };
 
-export const logger: winston.Logger = winston.createLogger({
+export const fractalLogger: winston.Logger = winston.createLogger({
   transports: [
     new winston.transports.File(options.file),
     new winston.transports.Console(options.console)
@@ -39,13 +39,13 @@ export const logger: winston.Logger = winston.createLogger({
   exitOnError: false // do not exit on handled exceptions
 });
 
-export class Winston {
+export class FractalLogger {
   // create a stream object with a 'write' function that will be used by `morgan`
   stream = {
     write: (message: any, _encoding: any) => {
       // use the 'info' log level so the output will be picked up by both transports (file and console)
-      logger.info(message);
+      fractalLogger.info(message);
     }
   };
 }
-export default new Winston();
+export default new FractalLogger();

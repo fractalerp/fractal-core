@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as appRoot from "app-root-path";
 
-import { logger } from "../config/winston";
+import { fractalLogger } from "../config/logger";
 import { DatabaseAdapter } from "./database_adapter";
 import { MongoDB } from "./mongodb";
 import { Rdms } from "./rdms";
@@ -29,7 +29,7 @@ export default class Database {
       rdms.connect();
 
     } else {
-      logger.error("Could not find database config file");
+      fractalLogger.error("Could not find database config file");
     }
   }
 }

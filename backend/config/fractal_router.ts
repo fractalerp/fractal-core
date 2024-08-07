@@ -2,31 +2,40 @@ import { Request, Response } from "express";
 import { NextFunction } from "express-serve-static-core";
 import * as passport from "passport";
 import * as appRoot from "app-root-path";
+import { StatusCodes } from "http-status-codes";
 
-import { App } from "./index";
+import home from "../app/routes/fractal_home";
+import { FractalApp } from "./../index";
 
-export class Router {
-  public app!: App;
+export class FractalRouter {
+  public app!: FractalApp;
 
-  constructor(app: App) {
+  constructor(app: FractalApp) {
     this.app = app;
+    // Add API routes
+    home.routes(app.express);
 
     this.app.express.all(
       "/*", async (req: any, res: any, next: NextFunction) => {
-        // This code handles routing issue between react-router and express
+        // Add react-router rotures here so that express does not logout
         if (
           req.path.startsWith("/signin") ||
-                    req.path.startsWith("/signup")
+          req.path.startsWith("/signup") ||
+          req.path.startsWith("/dashboard") ||
+          req.path.startsWith("/permissions") ||
+          req.path.startsWith("/roles") ||
+          req.path.startsWith("/users") ||
+          req.path.startsWith("/profile")
         ) {
+          // Else redirect from express to the react public app
           return res.sendFile(`${appRoot}/public/index.html`);
         }
-
         // Most likely just handle the 404 here
         next();
       });
   }
 
-  public authenticateApi(app: App, req: Request | any, res: Response, next: NextFunction) {
+  public authenticateApi(app: FractalApp, req: Request | any, res: Response, next: NextFunction) {
     return this.authenticate((err: any, userDetail: any, info: any) => {
       if (err) {
         return next(err);
@@ -35,11 +44,11 @@ export class Router {
       if (!userDetail) {
         if (info.name === "TokenExpiredError") {
           return res
-            .status(401)
+            .status(StatusCodes.UNAUTHORIZED)
             .json({ message: "Your token has expired. Please generate a new one" });
         } else {
           return res
-            .status(401)
+            .status(StatusCodes.UNAUTHORIZED)
             .json({ message: info.message });
         }
       }
@@ -50,11 +59,9 @@ export class Router {
         req.session.user = userDetail;
       }
 
-      // check for permissions
       next();
     })(req, res, next);
   }
-
 
   private authenticate = (callback: (err: any, user: any, info: any) => void) => passport.authenticate("jwt", { session: false, failWithError: true }, callback);
 }

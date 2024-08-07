@@ -1,4 +1,5 @@
 import * as http from "http";
+import * as fs from "fs";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as dotenv from "dotenv";
@@ -14,12 +15,12 @@ import helmet from "helmet";
 import * as useragent from "useragent";
 import { StatusCodes } from "http-status-codes";
 import { ExtractJwt, Strategy, StrategyOptionsWithRequest } from "passport-jwt";
-import winston, { logger } from "./config/winston";
+import fractaLog, { fractalLogger } from "./config/logger";
 import { csrfHandler } from "./middleware/csrf.middleware";
 import { Environments } from "./utils/constants";
 import { getJWT } from "./utils/helpers";
 
-export class App {
+export class FractalApp {
   public express!: express.Application;
   public session!: express.RequestHandler;
   public server!: http.Server;
@@ -45,10 +46,10 @@ export class App {
       //
       this.express.use(this.initPassport());
 
-      // this.loadAppComponents();
+      this.loadComponents();
 
     } catch (error) {
-      logger.log("error", `Fractal Core: Some weirdo error happened :( ", ${error}`);
+      fractalLogger.log("error", `Fractal Core: Some weirdo error happened :( ", ${error}`);
     }
   }
 
@@ -67,14 +68,13 @@ export class App {
     // so we can get the client's IP address
     this.express.enable("trust proxy");
     // set up logging
-    this.express.use(morgan("combined", { stream: winston.stream } as any));
+    this.express.use(morgan("combined", { stream: fractaLog.stream } as any));
     this.server = http.createServer(this.express);
 
     useragent(true);
 
     this.handleUncaughtExceptions();
   }
-
 
   // @ts-ignore
   private setUpHelment() {
@@ -149,10 +149,10 @@ export class App {
     this.redisClient
       .connect()
       .then(() => {
-        logger.log("info", "Redis connected");
+        fractalLogger.log("info", "Redis connected");
       })
       .catch(() => {
-        logger.error("Failed to connect to redis client");
+        fractalLogger.error("Failed to connect to redis client");
       });
     this.redisStore = new RedisStore({
       client: this.redisClient,
@@ -180,23 +180,23 @@ export class App {
    * Auto loads component apps
    */
 
-  // private loadCoponentApps = async () => {
-  //     // Define the directory containing classes
-  //     const classesDir = `${appRoot}/components`;
-  //
-  //     // Read all files in the classes directory
-  //     for (const component of fs.readdirSync(classesDir)) {
-  //
-  //         import(`./components/${component}`).then(module => {
-  //             // Assuming each file exports a single class
-  //             const className = Object.keys(module)[0];
-  //             const importedClass = module[className];
-  //             new importedClass(this);
-  //         }).catch(err => {
-  //             logger.error(`Error importing component ${component}: ${err}`);
-  //         });
-  //     }
-  // };
+  private loadComponents = async () => {
+    // Define the directory containing classes
+    const classesDir = `${appRoot}/components`;
+
+    // Read all files in the classes directory
+    for (const component of fs.readdirSync(classesDir)) {
+
+      import(`./components/${component}`).then(module => {
+        // Assuming each file exports a single class
+        const className = Object.keys(module)[0];
+        const importedClass = module[className];
+        new importedClass(this);
+      }).catch(err => {
+        fractalLogger.error(`Error importing component ${component}: ${err}`);
+      });
+    }
+  };
 
   private handleUncaughtExceptions = () => {
     this.express.use((error: any, _req: express.Request, res: express.Response, next: (error: any) => void) => {
@@ -210,4 +210,4 @@ export class App {
   };
 }
 
-export default new App();
+export default new FractalApp();
