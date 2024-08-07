@@ -16,6 +16,7 @@ describe("NoSqlActiveRecord", () => {
     mongoose.Model.find = modelMock;
     mongoose.Model.findByIdAndUpdate = modelMock;
     mongoose.Model.findByIdAndDelete = modelMock;
+    mongoose.Model.aggregate = modelMock;
   });
 
   it("should find one document", async () => {
@@ -71,6 +72,30 @@ describe("NoSqlActiveRecord", () => {
     const result = await nosqlActiveRecord.delete(userOneData._id);
 
     expect(result).to.equal(undefined);
+  });
+
+
+  it("should aggregate documents", async () => {
+    const pipeline = [
+      {
+        $match: {
+          status: "Online"
+        }
+      },
+      {
+        $group: {
+          _id: "$age",
+          totalAge: { $sum: "$_id" }
+        }
+      }
+    ];
+    const aggregateMock = modelMock.returns(Promise.resolve(0));
+    aggregateMock.resolves(0);
+    // @ts-ignore
+    const result = await nosqlActiveRecord.aggregate(pipeline);
+
+    expect(result).to.equal(0);
+    expect(aggregateMock.calledWith(pipeline)).to.be.true;
   });
 
   // Tear down
