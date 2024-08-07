@@ -55,26 +55,20 @@ describe("NoSqlActiveRecord", () => {
   });
 
   it("should update a document", async () => {
-    // @ts-ignore
-    sinon.stub(nosqlActiveRecord.model.prototype, "save").returns(Promise.resolve({ id: 1, ...userOneData }));
-    const newUserResult = await nosqlActiveRecord.create(userOneData);
-
     const updateMock = modelMock.returns(Promise.resolve(userTwoData));
     updateMock.resolves(userTwoData);
-
     // @ts-ignore
-    const result = await nosqlActiveRecord.update(newUserResult.id, userTwoData);
+    const result = await nosqlActiveRecord.update(userOneData._id, userTwoData);
 
     expect(result).to.deep.equal(userTwoData);
   });
 
   it("should delete a document", async () => {
-    const id = new mongoose.Types.ObjectId();
     const deleteMock = modelMock.returns(Promise.resolve(undefined));
 
     deleteMock.resolves(undefined);
     // @ts-ignore
-    const result = await nosqlActiveRecord.delete(id);
+    const result = await nosqlActiveRecord.delete(userOneData._id);
 
     expect(result).to.equal(undefined);
   });

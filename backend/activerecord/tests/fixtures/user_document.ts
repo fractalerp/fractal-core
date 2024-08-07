@@ -5,6 +5,7 @@ export interface IUserDocument {
   firstName: string;
   lastName: string;
   phoneNumber: number;
+  _id?: string;
 }
 
 export const userDocumentSchema: Record<string, SchemaProperty> = {

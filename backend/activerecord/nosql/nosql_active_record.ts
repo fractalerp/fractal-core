@@ -32,11 +32,11 @@ export class NoSqlActiveRecord<T> implements NoSQLActiveRecordInterface<T> {
 
   async update(id: string | number, data: Partial<T>): Promise<T> {
     // @ts-ignore: TODO work on typing to support T | null
-    return this.model.findByIdAndUpdate(id, data, { new: true });
+    return this.model.findByIdAndUpdate(new mongoose.Types.ObjectId(id), data, { new: true });
   }
 
   async delete(id: string | number): Promise<void> {
-    await this.model.findByIdAndDelete(id);
+    await this.model.findByIdAndDelete(new mongoose.Types.ObjectId(id));
   }
 
   async aggregate(pipeline: any[]): Promise<any> {
