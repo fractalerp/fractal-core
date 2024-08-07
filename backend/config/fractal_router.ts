@@ -18,6 +18,9 @@ export class FractalRouter {
     this.app.express.all(
       "/*", async (req: any, res: any, next: NextFunction) => {
         // Add react-router rotures here so that express does not logout
+
+        // TODO: this should be automated so that the public routes are read
+        // from react routes
         if (
           req.path.startsWith("/signin") ||
           req.path.startsWith("/signup") ||
@@ -63,5 +66,5 @@ export class FractalRouter {
     })(req, res, next);
   }
 
-  private authenticate = (callback: (err: any, user: any, info: any) => void) => passport.authenticate("jwt", { session: false, failWithError: true }, callback);
+  private authenticate = (callback: (err: any, user: any, info: any) => void) => passport.authenticate("bearer", { session: false, failWithError: true }, callback);
 }
