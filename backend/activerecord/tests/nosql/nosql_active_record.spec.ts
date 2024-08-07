@@ -19,6 +19,8 @@ describe("NoSqlActiveRecord", () => {
     mongoose.Model.aggregate = modelMock;
     // @ts-ignore
     nosqlActiveRecord.model.prototype.save = modelMock;
+    // @ts-ignore
+    nosqlActiveRecord.model.schema.index = modelMock;
   });
 
   it("should find one document", async () => {
@@ -96,6 +98,16 @@ describe("NoSqlActiveRecord", () => {
 
     expect(result).to.equal(0);
     expect(aggregateMock.calledWith(pipeline)).to.be.true;
+  });
+
+  it("should index document property", async () => {
+    const index = { username: 1 };
+    const indexOptions = { unique: true };
+    const indexMock = modelMock.returns(Promise.resolve(undefined));
+    indexMock.resolves(undefined);
+    const result = await nosqlActiveRecord.index(index, indexOptions);
+
+    expect(result).to.equal(undefined);
   });
 
   // Tear down

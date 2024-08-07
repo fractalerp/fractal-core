@@ -43,8 +43,7 @@ export class NoSqlActiveRecord<T> implements NoSQLActiveRecordInterface<T> {
     return this.model.aggregate(pipeline);
   }
 
-  async index(keys: string[]): Promise<void> {
-    // @ts-ignore: TODO work on typing to support Model<T, {}, {}, {}, IfAny<T, any, Document<unknown, {}, T> & Require_id<T>>, any>
-    await this.model.createIndex(keys);
+  async index(keys: Record<string, any>, options?: Record<string, any>): Promise<void> {
+    await this.model.schema.index(keys, options);
   }
 }
