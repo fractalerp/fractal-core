@@ -19,7 +19,7 @@ export class TaskRouter extends FractalRouter {
 
   private allowPublicRoutes() {
     this.fractalApp.express.all(
-      `${process.env.API_BASE}auth/*`, async (req: any, res: any, next: NextFunction) => {
+      `${process.env.API_BASE}tasks/*`, async (req: any, res: any, next: NextFunction) => {
         // Add public routes not to authenticate
         await this.authenticateApi(this.fractalApp, req, res, next);
       });
