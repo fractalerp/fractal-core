@@ -14,6 +14,8 @@ describe("RelationalActiveRecord", () => {
     relationalActiveRecord.model.findOne = modelMock;
     // @ts-ignore
     relationalActiveRecord.model.findAll = modelMock;
+    // @ts-ignore
+    relationalActiveRecord.model.create = modelMock;
   });
 
   it("should find one row", async () => {
@@ -27,7 +29,7 @@ describe("RelationalActiveRecord", () => {
     expect(modelMock.calledWith({})).to.be.true;
   });
 
-  it("shoul find list of rows", async () => {
+  it("should find list of rows", async () => {
     const findMock = modelMock.returns(Promise.resolve([userOneData]));
 
     findMock.resolves([userOneData]);
@@ -37,6 +39,16 @@ describe("RelationalActiveRecord", () => {
     expect(result.length).to.equal(1);
     expect(result[0]).to.deep.equal(userOneData);
     expect(findMock.calledWith({})).to.be.true;
+  });
+
+  it("should create a row", async () => {
+    const createMock = modelMock.returns(Promise.resolve(userOneData));
+
+    createMock.resolves(userOneData);
+
+    const result = await relationalActiveRecord.create(userOneData);
+
+    expect(result).to.deep.equal(userOneData);
   });
 
   // Tear down
