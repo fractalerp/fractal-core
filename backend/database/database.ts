@@ -1,34 +1,32 @@
 import * as fs from "fs";
 import * as appRoot from "app-root-path";
-import { Sequelize } from "sequelize";
-import * as mongoose from "mongoose";
 
 import { logger } from "../config/winston";
 import { DatabaseAdapter } from "./database_adapter";
 import { MongoDB } from "./mongodb";
+import { Rdms } from "./rdms";
 
 export default class Database {
-  private datbaseConfigFile = `${appRoot}/config/database.yml`;
-  // @ts-ignore
-  private database: Sequelize | mongoose.Connection | null;
+  private datbaseConfigFile = `${appRoot}/config/database.json`;
 
   constructor() {
     if (!fs.existsSync(this.datbaseConfigFile)) {
       // Set database engine by parsing the json file
       const rawData = fs.readFileSync(this.datbaseConfigFile, "utf8");
       const databaseOption = JSON.parse(rawData as any);
-      const adapter = databaseOption.adapter;
-      const databaseUrl = databaseOption.url;
+      const noSqLAdapter = databaseOption.nosql.adapter;
+      const databaseUri = databaseOption.url;
 
-      switch (adapter) {
+      switch (noSqLAdapter) {
         case DatabaseAdapter.MONGODB:
-          const mongodb = new MongoDB(databaseUrl);
+          const mongodb = new MongoDB(process.env[`${databaseUri}`] as string);
           mongodb.connect();
-
-          this.database = mongodb.database;
 
           break;
       }
+
+      const rdms = new Rdms(process.env[`${databaseUri}`] as string);
+      rdms.connect();
 
     } else {
       logger.error("Could not find database config file");

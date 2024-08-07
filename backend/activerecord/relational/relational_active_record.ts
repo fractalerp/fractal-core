@@ -9,8 +9,7 @@ export class RelationalActiveRecord<T> implements RelationalActiveRecordInterfac
 
   constructor(modelName: string, schema: Record<string, SchemaProperty>) {
     // TODO get global sequilize instance from memory
-    process.env.DB_DIALECT = "mysql";
-    this.sequelize = new Sequelize(`${process.env.DB_DIALECT}://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+    this.sequelize = new Sequelize(`${process.env.DATABASE_URI}`);
     // @ts-ignore
     this.model = this.sequelize.define(modelName, schema);
   }

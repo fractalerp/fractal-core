@@ -1,4 +1,10 @@
 {
-  "adapter": "mongodb",
-  "url": "${DATABASE_CONNECTION_STRING}"
+  "relational": {
+    "adapter": "mysql2",
+    "uri": "DATABASE_URI"
+  },
+  "nosql": {
+    "adapter": "mongodb",
+    "uri": "DATABASE_URI"
+  }
 }
