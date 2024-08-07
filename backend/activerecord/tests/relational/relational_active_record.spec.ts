@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import * as sinon from "sinon";
 import { RelationalActiveRecord } from "../../../activerecord/relational/relational_active_record";
-import { userOneData } from "../fixtures/user_data";
+import { userOneData, userTwoData } from "../fixtures/user_data";
 import { IUserTable, userTableSchema } from "../fixtures/user_table";
 
 describe("RelationalActiveRecord", () => {
@@ -16,6 +16,8 @@ describe("RelationalActiveRecord", () => {
     relationalActiveRecord.model.findAll = modelMock;
     // @ts-ignore
     relationalActiveRecord.model.create = modelMock;
+    // @ts-ignore
+    relationalActiveRecord.model.update = modelMock;
   });
 
   it("should find one row", async () => {
@@ -49,6 +51,15 @@ describe("RelationalActiveRecord", () => {
     const result = await relationalActiveRecord.create(userOneData);
 
     expect(result).to.deep.equal(userOneData);
+  });
+
+  it("should update a row", async () => {
+    const updateMock = modelMock.returns(Promise.resolve(userTwoData));
+    updateMock.resolves(userTwoData);
+
+    const result = await relationalActiveRecord.update(userOneData._id, userTwoData);
+
+    expect(result).to.deep.equal(userTwoData);
   });
 
   // Tear down
