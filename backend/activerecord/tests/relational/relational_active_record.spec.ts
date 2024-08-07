@@ -18,6 +18,8 @@ describe("RelationalActiveRecord", () => {
     relationalActiveRecord.model.create = modelMock;
     // @ts-ignore
     relationalActiveRecord.model.update = modelMock;
+    // @ts-ignore
+    relationalActiveRecord.model.destroy = modelMock;
   });
 
   it("should find one row", async () => {
@@ -60,6 +62,16 @@ describe("RelationalActiveRecord", () => {
     const result = await relationalActiveRecord.update(userOneData._id, userTwoData);
 
     expect(result).to.deep.equal(userTwoData);
+  });
+
+  it("should delete a row", async () => {
+    const deleteMock = modelMock.returns(Promise.resolve(undefined));
+
+    deleteMock.resolves(undefined);
+    // @ts-ignore
+    const result = await relationalActiveRecord.delete(userOneData._id);
+
+    expect(result).to.equal(undefined);
   });
 
   // Tear down
