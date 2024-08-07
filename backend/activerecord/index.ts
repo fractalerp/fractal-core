@@ -4,6 +4,7 @@ import { NoSqlActiveRecord } from "./nosql/nosql_active_record";
 import { RelationalActiveRecord } from "./relational/relational_active_record";
 import { Messages } from "./utils/messages";
 import { SchemaProperty } from "./@types/schema_property";
+import { ActiveRecordError } from "./lib/active_record_error";
 
 export class ActiveRecord<T> implements ActiveRecordInterface<T> {
   private nosqlActiveRecord!: NoSqlActiveRecord<T>;
@@ -62,7 +63,7 @@ export class ActiveRecord<T> implements ActiveRecordInterface<T> {
 
   async aggregate(pipeline: any[]): Promise<any> {
     if (this.databaseType === DatabaseType.RELATIONAL) {
-      throw new Error(Messages.RELATIONAL_DATABASE_NOT_SUPPORTED);
+      throw new ActiveRecordError(Messages.RELATIONAL_DATABASE_NOT_SUPPORTED);
     }
 
     return this.nosqlActiveRecord.aggregate(pipeline);
@@ -70,7 +71,7 @@ export class ActiveRecord<T> implements ActiveRecordInterface<T> {
 
   async index(keys: string[]): Promise<void> {
     if (this.databaseType === DatabaseType.RELATIONAL) {
-      throw new Error(Messages.RELATIONAL_DATABASE_NOT_SUPPORTED);
+      throw new ActiveRecordError(Messages.RELATIONAL_DATABASE_NOT_SUPPORTED);
     }
 
     return this.nosqlActiveRecord.index(keys);
@@ -78,7 +79,7 @@ export class ActiveRecord<T> implements ActiveRecordInterface<T> {
 
   async query(sql: string, params?: any[]): Promise<any> {
     if (this.databaseType === DatabaseType.NOSQL) {
-      throw new Error(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
+      throw new ActiveRecordError(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
     }
 
     return this.relationalActiveRecord.query(sql, params);
@@ -86,7 +87,7 @@ export class ActiveRecord<T> implements ActiveRecordInterface<T> {
 
   async beginTransaction(): Promise<void> {
     if (this.databaseType === DatabaseType.NOSQL) {
-      throw new Error(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
+      throw new ActiveRecordError(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
     }
 
     return this.relationalActiveRecord.beginTransaction();
@@ -94,7 +95,7 @@ export class ActiveRecord<T> implements ActiveRecordInterface<T> {
 
   async commitTransaction(): Promise<void> {
     if (this.databaseType === DatabaseType.NOSQL) {
-      throw new Error(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
+      throw new ActiveRecordError(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
     }
 
     await this.relationalActiveRecord.commitTransaction();
@@ -102,7 +103,7 @@ export class ActiveRecord<T> implements ActiveRecordInterface<T> {
 
   async rollbackTransaction(): Promise<void> {
     if (this.databaseType === DatabaseType.NOSQL) {
-      throw new Error(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
+      throw new ActiveRecordError(Messages.NOSQL_DATABASE_NOT_SUPPORTED);
     }
 
     await this.relationalActiveRecord.rollbackTransaction();
