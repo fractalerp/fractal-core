@@ -1,22 +1,23 @@
+import { SchemaProperty } from "activerecord/@types/schema_property";
 
 export interface IUserTable {
+  type?: string;
   firstName: string;
   lastName: string;
+  phoneNumber: number;
+  id?: string;
 }
 
-export const userTableSchema = {
+export const userTableSchema: Record<string, SchemaProperty> = {
   firstName: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   lastName: {
     type: String,
-    required: false,
     unique: false
   },
   phoneNumber: {
-    type: Number,
-    unique: false
+    type: Number
   }
 };
