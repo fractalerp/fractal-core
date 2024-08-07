@@ -39,6 +39,19 @@ describe("NoSqlActiveRecord", () => {
     expect(findMock.calledWith({})).to.be.true;
   });
 
+  it("should create a document", async () => {
+    const createMock = sinon
+      // @ts-ignore
+      .stub(nosqlActiveRecord.model.prototype, "save")
+      .returns(Promise.resolve(userData));
+
+    createMock.resolves(userData);
+
+    const result = await nosqlActiveRecord.create(userData);
+
+    expect(result).to.deep.equal(userData);
+  });
+
   // Tear down
   afterEach(() => {
     sinon.restore();

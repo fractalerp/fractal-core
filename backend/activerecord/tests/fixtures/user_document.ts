@@ -7,7 +7,6 @@ export interface IUserDocument {
   phoneNumber: number;
 }
 
-
 export const userDocumentSchema: Record<string, SchemaProperty> = {
   firstName: {
     type: String,
@@ -18,7 +17,6 @@ export const userDocumentSchema: Record<string, SchemaProperty> = {
     unique: false
   },
   phoneNumber: {
-    type: Number,
-    unique: false
+    type: Number
   }
 };
