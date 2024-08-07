@@ -1,50 +1,33 @@
-// import { expect } from "chai";
-// import { Sequelize, Model, DataTypes } from "sequelize";
-// import * as sinon from "sinon";
-// import { RelationalActiveRecord } from "../../relational/relational_active_record";
-// import { IUserTable, userTableSchema } from "../fixtures/user_table";
+import { expect } from "chai";
+import * as sinon from "sinon";
+import { RelationalActiveRecord } from "../../../activerecord/relational/relational_active_record";
+import { userOneData } from "../fixtures/user_data";
+import { IUserTable, userTableSchema } from "../fixtures/user_table";
 
 describe("RelationalActiveRecord", () => {
-  // let sequelizeMock: sinon.SinonStubbedInstance<Sequelize>;
-  // let modelMock: sinon.SinonStubbedInstance<typeof Model>;
-  // let relationalActiveRecord: RelationalActiveRecord<IUserTable>;
-  // const modelName = "User";
+  const sandbox = sinon.createSandbox();
+  let modelMock!: sinon.SinonStub<any[], any>;
+  const relationalActiveRecord = new RelationalActiveRecord<IUserTable>("Table", userTableSchema);
+  before(() => {
+    modelMock = sandbox.stub();
+    // @ts-ignore
+    relationalActiveRecord.model.findOne = modelMock;
+  });
 
-  // beforeEach(() => {
-  //   sequelizeMock = sinon.createStubInstance(Sequelize);
-  //   modelMock = sinon.stub(Model);
-  //   relationalActiveRecord = new RelationalActiveRecord<IUserTable>(modelName, userTableSchema);
-  // });
+  it("should find one document", async () => {
+    const findOneMock = modelMock.returns(Promise.resolve(userOneData));
 
-  // afterEach(() => {
-  //   sinon.restore();
-  // });
+    findOneMock.resolves(userOneData);
 
-  // it("should create a record", async () => {
-  //   const mockData: IUserTable = {
-  //     firstName: "first name",
-  //     lastName: "last name"
-  //   };
+    const result = await relationalActiveRecord.findOne({});
 
-  //   const tableModel = sequelizeMock.define(
-  //     modelName,
-  //     {
-  //       firstName: {
-  //         type: DataTypes.STRING,
-  //         allowNull: false
-  //       },
-  //       lastName: {
-  //         type: DataTypes.STRING
-  //       }
-  //     }
-  //   );
-  //   const modelInstance = tableModel.build();
+    expect(result).to.deep.equal(userOneData);
+    expect(modelMock.calledWith({})).to.be.true;
+  });
 
-  //   modelMock.create.resolves(modelInstance);
-
-  //   const result = await relationalActiveRecord.create(mockData);
-
-  //   expect(result).to.deep.equal(mockData);
-  //   // expect(modelMock.create.calledWith(modelInstance)).to.be.true;
-  // });
+  // Tear down
+  afterEach(() => {
+    sinon.restore();
+    sandbox.restore();
+  });
 });
