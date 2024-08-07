@@ -59,7 +59,7 @@ describe("NoSqlActiveRecord", () => {
   it("should update a document", async () => {
     const updateMock = modelMock.returns(Promise.resolve(userTwoData));
     updateMock.resolves(userTwoData);
-    // @ts-ignore
+
     const result = await nosqlActiveRecord.update(userOneData._id, userTwoData);
 
     expect(result).to.deep.equal(userTwoData);
@@ -73,7 +73,6 @@ describe("NoSqlActiveRecord", () => {
     const result = await nosqlActiveRecord.delete(userOneData._id);
 
     expect(result).to.equal(undefined);
-    // expect(deleteMock.calledWith(userOneData._id)).to.be.true;
   });
 
 
@@ -93,7 +92,6 @@ describe("NoSqlActiveRecord", () => {
     ];
     const aggregateMock = modelMock.returns(Promise.resolve(0));
     aggregateMock.resolves(0);
-    // @ts-ignore
     const result = await nosqlActiveRecord.aggregate(pipeline);
 
     expect(result).to.equal(0);
