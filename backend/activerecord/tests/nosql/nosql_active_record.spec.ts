@@ -17,6 +17,8 @@ describe("NoSqlActiveRecord", () => {
     mongoose.Model.findByIdAndUpdate = modelMock;
     mongoose.Model.findByIdAndDelete = modelMock;
     mongoose.Model.aggregate = modelMock;
+    // @ts-ignore
+    nosqlActiveRecord.model.prototype.save = modelMock;
   });
 
   it("should find one document", async () => {
@@ -43,10 +45,7 @@ describe("NoSqlActiveRecord", () => {
   });
 
   it("should create a document", async () => {
-    const createMock = sinon
-      // @ts-ignore
-      .stub(nosqlActiveRecord.model.prototype, "save")
-      .returns(Promise.resolve(userOneData));
+    const createMock = modelMock.returns(Promise.resolve(userOneData));
 
     createMock.resolves(userOneData);
 
@@ -72,6 +71,7 @@ describe("NoSqlActiveRecord", () => {
     const result = await nosqlActiveRecord.delete(userOneData._id);
 
     expect(result).to.equal(undefined);
+    // expect(deleteMock.calledWith(userOneData._id)).to.be.true;
   });
 
 
