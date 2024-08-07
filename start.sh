@@ -15,6 +15,7 @@ npm run build:release
 
 # set up environment variables
 echo JWT_SECRET="fractal-dev" >> dist/.env
+echo DATBASE_URI="mysql://" >> dist/.env
 
 # MASH UP FRONTEND AND BACKEND TO RUN AS ONE APP
 cp -r ../frontend/dist/* ./public
