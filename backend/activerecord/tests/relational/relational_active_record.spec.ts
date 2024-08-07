@@ -20,6 +20,8 @@ describe("RelationalActiveRecord", () => {
     relationalActiveRecord.model.update = modelMock;
     // @ts-ignore
     relationalActiveRecord.model.destroy = modelMock;
+    // @ts-ignore
+    relationalActiveRecord.model.sequelize?.query = modelMock;
   });
 
   it("should find one row", async () => {
@@ -72,6 +74,15 @@ describe("RelationalActiveRecord", () => {
     const result = await relationalActiveRecord.delete(userOneData._id);
 
     expect(result).to.equal(undefined);
+  });
+
+  it("should submit a query for execution", async () => {
+    const queryMock = modelMock.returns(Promise.resolve(userOneData));
+
+    queryMock.resolves(userOneData);
+    const result = await relationalActiveRecord.query("SELECT * FROM `users`");
+
+    expect(result).to.equal(userOneData);
   });
 
   // Tear down
