@@ -8,25 +8,35 @@ import { userData } from "../fixtures/user_data";
 describe("NoSqlActiveRecord", () => {
   const sandbox = sinon.createSandbox();
   let modelMock!: sinon.SinonStub<any[], any>;
-  let nosqlActiveRecord!: NoSqlActiveRecord<IUserDocument>;
-  // Set up on every test
-  beforeEach(() => {
-    nosqlActiveRecord = new NoSqlActiveRecord<IUserDocument>("Document", userDocumentSchema);
+  const nosqlActiveRecord = new NoSqlActiveRecord<IUserDocument>("Document", userDocumentSchema);
+
+  before(() => {
+    modelMock = sandbox.stub();
+    mongoose.Model.findOne = modelMock;
+    mongoose.Model.find = modelMock;
   });
 
   it("should find one document", async () => {
-    modelMock = sandbox
-      .stub()
-      .returns(Promise.resolve(userData));
+    const findOneMock = modelMock.returns(Promise.resolve(userData));
 
-    mongoose.Model.findOne = modelMock;
-
-    modelMock.resolves(userData);
+    findOneMock.resolves(userData);
 
     const result = await nosqlActiveRecord.findOne({});
 
     expect(result).to.deep.equal(userData);
     expect(modelMock.calledWith({})).to.be.true;
+  });
+
+  it("should find list of documents", async () => {
+    const findMock = modelMock.returns(Promise.resolve([userData]));
+
+    findMock.resolves([userData]);
+
+    const result = await nosqlActiveRecord.find({});
+
+    expect(result.length).to.equal(1);
+    expect(result[0]).to.deep.equal(userData);
+    expect(findMock.calledWith({})).to.be.true;
   });
 
   // Tear down
