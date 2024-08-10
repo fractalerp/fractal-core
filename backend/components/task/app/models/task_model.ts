@@ -1,11 +1,11 @@
 import { FractalActiveModel } from "../../../../app/models/fractal_active_model";
 
-export interface ITaskDocument {
+export interface ITaskModelDocument {
   name: string;
   description: string;
 }
 
-const TaskSchema = {
+const TaskModelSchema = {
   name: {
     type: String,
     required: true,
@@ -17,6 +17,4 @@ const TaskSchema = {
   }
 };
 
-export const Task = new FractalActiveModel<ITaskDocument>("Task", TaskSchema);
-
-export default Task;
+export const TaskModel = new FractalActiveModel<ITaskModelDocument>("Task", TaskModelSchema);

@@ -1,7 +1,8 @@
 import { NextFunction } from "express-serve-static-core";
 import { FractalRouter } from "../../../config/fractal_router";
 
-import home from "../app/routes/home";
+import home from "../app/routes/home_route";
+import tasks from "../app/routes/tasks_route";
 import { FractalApp } from "../../../index";
 
 export class TaskRouter extends FractalRouter {
@@ -15,6 +16,7 @@ export class TaskRouter extends FractalRouter {
     this.allowPublicRoutes();
     // Add routes
     home.routes(app);
+    tasks.routes(app);
   }
 
   private allowPublicRoutes() {
