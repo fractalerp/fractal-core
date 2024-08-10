@@ -4,18 +4,18 @@ import * as passport from "passport";
 import * as appRoot from "app-root-path";
 import { StatusCodes } from "http-status-codes";
 
-import home from "../app/routes/fractal_home";
-import { FractalApp } from "./../index";
+import { FractalHome } from "../app/routes/fractal_home";
+import { FractalApp } from "../app";
 
 export class FractalRouter {
-  public app!: FractalApp;
+  public fractalApp!: FractalApp;
 
-  constructor(app: FractalApp) {
-    this.app = app;
+  constructor(fractalApp: FractalApp) {
+    this.fractalApp = fractalApp;
     // Add API routes
-    home.routes(app.express);
+    new FractalHome(fractalApp.express);
 
-    this.app.express.all(
+    this.fractalApp.express.all(
       "/*", async (req: any, res: any, next: NextFunction) => {
         // Add react-router rotures here so that express does not logout
 

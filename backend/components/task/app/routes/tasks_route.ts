@@ -1,10 +1,10 @@
 import { TasksController } from "../controllers/tasks_controller";
-import { FractalApp } from "../../../../index";
+import { FractalApp } from "../../../../app";
 
 export class TasksRoute {
   public tasksController!: TasksController;
 
-  public routes(fractalApp: FractalApp): void {
+  public constructor(fractalApp: FractalApp) {
     this.tasksController = new TasksController();
     const rolesEndpoint = `${process.env.API_BASE}tasks`;
     /* Get, Add tasks */
@@ -19,5 +19,3 @@ export class TasksRoute {
       .delete(this.tasksController.deleteTask);
   }
 }
-
-export default new TasksRoute();
