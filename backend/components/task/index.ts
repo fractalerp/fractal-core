@@ -1,6 +1,6 @@
 import { fractalLogger } from "../../config/logger";
 import { FractalApp } from "../../app";
-import { TaskRouter } from "./config/router";
+import { TaskRouter } from "./routes/router";
 
 export class TaskComponent {
   public taskRouter!: TaskRouter;

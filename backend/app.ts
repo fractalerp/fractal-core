@@ -19,7 +19,7 @@ import fractaLog, { fractalLogger } from "./config/logger";
 import { csrfHandler } from "./middleware/csrf.middleware";
 import { Environments } from "./utils/constants";
 import { getJWT } from "./utils/helpers";
-import { FractalRouter } from "./config/fractal_router";
+import { FractalRouter } from "./routes/fractal_router";
 
 export class FractalApp {
   public express!: express.Application;
