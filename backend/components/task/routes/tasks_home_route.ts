@@ -3,7 +3,7 @@ import { FractalApp } from "../../../app";
 
 export class TasksHomeRoute {
   public constructor(fractalApp: FractalApp) {
-    const authEndpoint = `${process.env.API_BASE}tasks`;
+    const authEndpoint = `${process.env.API_BASE}tasks/home`;
     // GET endpoint
     fractalApp.express.route(authEndpoint)
       // GET endpoint

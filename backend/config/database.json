@@ -1,10 +1,10 @@
 {
   "rdms": {
-    "adapter": "mysql2",
+    "adapter": "RDMS_DATABASE_ADAPTER",
     "uri": "RDMS_DATABASE_URI"
   },
   "nosql": {
-    "adapter": "mongodb",
+    "adapter": "NOSQL_DATABASE_ADAPTER",
     "uri": "NOSQL_DATABASE_URI"
   }
 }
