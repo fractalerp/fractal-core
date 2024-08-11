@@ -1,4 +1,5 @@
-import { ActiveRecord } from "@fractalerp/active-record-js"
+// import { ActiveRecord } from "@fractalerp/active-record-js"
+import { ActiveRecord } from "./../../../active-record-js"
 
 export interface ITaskModelDocument {
   name: string;

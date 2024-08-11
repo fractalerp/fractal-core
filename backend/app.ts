@@ -20,6 +20,7 @@ import { csrfHandler } from "./middleware/csrf.middleware";
 import { Environments } from "./utils/constants";
 import { getJWT } from "./utils/helpers";
 import { FractalRouter } from "./routes/fractal_router";
+import DatabaseManagementSystem from "./database/dms";
 
 export class FractalApp {
   public express!: express.Application;
@@ -29,6 +30,7 @@ export class FractalApp {
   public redisStore!: any;
   public environment!: string;
   public myCache = new NodeCache();
+  public dbms!: DatabaseManagementSystem;
 
   constructor() {
     try {
@@ -72,6 +74,9 @@ export class FractalApp {
     this.express.enable("trust proxy");
     // set up logging
     this.express.use(morgan("combined", { stream: fractaLog.stream } as any));
+    // set up database
+    this.dbms = new DatabaseManagementSystem();
+
     this.server = http.createServer(this.express);
 
     useragent(true);

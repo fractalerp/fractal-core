@@ -57,6 +57,20 @@ export class MongoDB implements DatabaseConnectionInterface {
     }
 
     this.database = mongoose.createConnection(this.database_url, mongoConnectionOptions);
+
+    this.database
+      .on("connected", () => {
+        fractalLogger.info("Connected to the database mongodb");
+      })
+      .on("error", (err: any) => {
+        if (err.message.indexOf("ECONNREFUSED") !== -1) {
+          // eslint-disable-next-line
+          fractalLogger.error("Error: The server was not able to reach MongoDB. Maybe it's not running?");
+          process.exit(1);
+        } else {
+          throw err;
+        }
+      });
   }
 
   async disconnect(): Promise<void> {
