@@ -98,7 +98,7 @@
     "@casl/ability": "^6.7.0",
     "@casl/mongoose": "^7.2.2",
     "@faker-js/faker": "^8.4.1",
-    "@fractalerp/active-record-js": "^1.0.12",
+    "@fractalerp/active-record-js": "^1.0.14",
     "@supercharge/request-ip": "^1.2.0",
     "@types/amqp": "^0.2.8",
     "@types/amqplib": "^0.10.5",
