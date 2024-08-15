@@ -153,7 +153,7 @@
     "country-iso-2-to-3": "^1.1.0",
     "country-state-city": "^3.1.4",
     "credit-card-type": "^10.0.0",
-    "cybersource-rest-client": "^0.0.54",
+    "cybersource-rest-client": "^0.0.58",
     "dotenv": "^16.4.5",
     "ejs-loader": "^0.5.0",
     "express": "^4.17.1",
