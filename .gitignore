@@ -18,5 +18,6 @@ backend/public
 backend/logs/*
 boss/build/*
 config/database.json
+.history/
 
 .env.dev
