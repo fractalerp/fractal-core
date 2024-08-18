@@ -1,14 +1,13 @@
 import { Request, Response } from "express";
-import { FractalApp } from "../../../app";
+import { FractalJs } from "../../../app";
 
 export class TasksHomeRoute {
-  public constructor(fractalApp: FractalApp) {
+  public constructor(fractalJs: FractalJs) {
     const authEndpoint = `${process.env.API_BASE}tasks/home`;
     // GET endpoint
-    fractalApp.express.route(authEndpoint)
+    fractalJs.express.route(authEndpoint)
       // GET endpoint
       .get((_req: Request, res: Response) => {
-        // Get all contacts
         res.status(200).send({
           message: "Welcome to Fractal Task API.",
           version: "1.0.0"

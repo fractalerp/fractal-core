@@ -7,7 +7,7 @@ fractalLogger.info("Starting server...");
 
 app.server.listen(port, () => {
 
-  fractalLogger.info(`Fractal Express server listening on port ${port}.\nEnvironment: ${process.env.NODE_ENV}`);
+  fractalLogger.info(`Fractal Js server listening on port ${port}.\nEnvironment: ${process.env.NODE_ENV}`);
 
 }).on("error", (err: any) => {
 

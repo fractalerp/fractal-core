@@ -1,34 +1,32 @@
-import * as http from "http";
-import * as fs from "fs";
-import * as express from "express";
-import * as bodyParser from "body-parser";
-import * as dotenv from "dotenv";
-import * as morgan from "morgan";
+import http from "http";
+import fs from "fs";
+import express from "express";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import morgan from "morgan";
 import { createClient } from "redis";
 import RedisStore from "connect-redis";
-import * as session from "express-session";
-import * as cors from "cors";
-import * as NodeCache from "node-cache";
-import * as passport from "passport";
-import * as appRoot from "app-root-path";
+import session from "express-session";
+import cors from "cors";
+import passport from "passport";
+import appRoot from "app-root-path";
 import helmet from "helmet";
-import * as useragent from "useragent";
+import useragent from "useragent";
 import { StatusCodes } from "http-status-codes";
 import { ExtractJwt, Strategy, StrategyOptionsWithRequest } from "passport-jwt";
 import fractaLog, { fractalLogger } from "./config/logger";
 import { csrfHandler } from "./middleware/csrf.middleware";
 import { Environments } from "./utils/constants";
-import { getJWT } from "./utils/helpers";
+import { getJWT } from "./utils/auth";
 import { FractalRouter } from "./routes/fractal_router";
 
-export class FractalApp {
+export class FractalJs {
   public express!: express.Application;
   public session!: express.RequestHandler;
   public server!: http.Server;
   public redisClient!: any;
   public redisStore!: any;
   public environment!: string;
-  public myCache = new NodeCache();
 
   constructor() {
     try {
@@ -186,19 +184,21 @@ export class FractalApp {
 
   private loadComponents = async () => {
     // Define the directory containing classes
+    const excludeDirs = [".DS_Store"];
     const classesDir = `${appRoot}/components`;
 
     // Read all files in the classes directory
-    for (const component of fs.readdirSync(classesDir)) {
-
-      import(`./components/${component}`).then(module => {
-        // Assuming each file exports a single class
-        const className = Object.keys(module)[0];
-        const importedClass = module[className];
-        new importedClass(this);
-      }).catch(err => {
-        fractalLogger.error(`Error importing component ${component}: ${err}`);
-      });
+    for (const componentName of fs.readdirSync(classesDir)) {
+      if (!excludeDirs.includes(componentName)) {
+        import(`./components/${componentName}`).then(module => {
+          // Assuming each file exports a single class
+          const className = Object.keys(module)[0];
+          const importedClass = module[className];
+          new importedClass(this);
+        }).catch((err: Error) => {
+          fractalLogger.error(`Error importing component ${componentName}: ${err.message}`);
+        });
+      }
     }
   };
 
@@ -214,4 +214,4 @@ export class FractalApp {
   };
 }
 
-export default new FractalApp();
+export default new FractalJs();
