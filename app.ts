@@ -57,7 +57,6 @@ export class FractalJs {
   private config(): void {
     // make sure that the environment is set
     dotenv.config();
-    this.express.use("/", express.static(`${appRoot}/public`));
     // // Set up helment
     this.setUpHelment();
     // support application/json type post data

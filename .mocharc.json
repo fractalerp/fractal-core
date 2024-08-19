@@ -9,12 +9,12 @@
   "package": "./package.json",
   "recursive": true,
   "reporter": "spec",
-  "require": [
-    "ts-node/register"
-  ],
   "slow": 75,
   "spec": [
     "components/**/*.spec.ts"
+  ],
+  "node-option": [
+    "import=tsx"
   ],
   "timeout": 60000,
   "ui": "bdd",
