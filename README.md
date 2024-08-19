@@ -9,7 +9,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/fractalerp/fractal-core/badge.svg?branch=main)](https://coveralls.io/github/fractalerp/fractal-core?branch=main)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/fractalerp/fractal-core/issues)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![code style: Tslint Latest](https://img.shields.io/badge/tslint_rules-latest-ff69b4.svg?style=flat-square)](https://github.com/buzinas/tslint-eslint-rules)
+[![code style: Eslint](https://img.shields.io/badge/eslint_rules-%5E9.9.0-ff69b4.svg?style=flat-square)](https://eslint.org)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffractalerp%2Ffractal-core.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffractalerp%2Ffractal-core?ref=badge_shield)
 [![MIT](https://img.shields.io/badge/mit-blue.svg)](http://opensource.org/licenses/mit)
 
