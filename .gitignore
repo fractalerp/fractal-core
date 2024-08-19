@@ -19,5 +19,6 @@ backend/logs/*
 boss/build/*
 config/database.json
 .history/
-
+.next/
+.husky
 .env.dev

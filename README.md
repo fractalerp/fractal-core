@@ -1,18 +1,24 @@
-Fractal
-----
+# Custom server with TypeScript + Nodemon example
 
-Fractal is a comprehensive suite of open-source applications designed to empower businesses with flexible and customizable software solutions.
+The example shows how you can use [TypeScript](https://typescriptlang.com) on both the server and the client while using [Nodemon](https://nodemon.io/) to live reload the server code without affecting the Next.js universal code.
 
-These are are the apps we aim to support at the core of fractal
+Server entry point is `server.ts` in development and `dist/server.js` in production.
+The `dist` directory should be added to `.gitignore`.
 
-- Financial and Accounting
-- Supply Chain Management
-- Customer Relationship Management
-- Human Resources Management
-- Manufacturing Management
-- Logistics Management
-- Manufacturing Management
-- Inventory Management
-- Warehouse Management
-- Sales Management
-- Marketing Management
+## Deploy your own
+
+Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/custom-server)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/custom-server)
+
+## How to use
+
+Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+
+```bash
+npx create-next-app --example custom-server custom-server-app
+# or
+yarn create next-app --example custom-server custom-server-app
+# or
+pnpm create next-app --example custom-server custom-server-app
+```
