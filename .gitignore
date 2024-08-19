@@ -13,12 +13,10 @@ yarn-error.log
 *.DS_Store
 assets/certs/*
 .DS_Store
-backend/public
-backend/logs/*
-boss/build/*
 config/database.json
 .history/
 .next/
 .husky
 .env.dev
 tsconfig.tsbuildinfo
+logs/*
