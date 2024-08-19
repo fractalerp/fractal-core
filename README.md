@@ -1,24 +1,55 @@
-# Custom server with TypeScript + Nodemon example
+[![Node.js CI](https://github.com/fractalerp/fractal-core/actions/workflows/ci.yml/badge.svg)](https://github.com/fractalerp/fractal-core/actions/workflows/ci.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/486b143d9023a951f36d/maintainability)](https://codeclimate.com/github/fractalerp/fractal-core/maintainability)
+[![Dependencies](https://img.shields.io/librariesio/release/npm/@fractalerp/fractal-core)](https://libraries.io/npm/@fractalerp%2Ffractal-core)
+[![Vulnerabilities](https://snyk.io/test/github/fractalerp/fractal-core/badge.svg)](https://snyk.io/test/github/fractalerp/fractal-core)
+![Node 11](https://img.shields.io/badge/node-11.5.x-green.svg)
+![Npm 6](https://img.shields.io/badge/npm-6.4.x-green.svg)
+![Webpack 5](https://img.shields.io/badge/webpack-5.20.2-green.svg)
+[![codecov](https://codecov.io/gh/fractalerp/fractal-core/branch/main/graph/badge.svg)](https://codecov.io/gh/fractalerp/fractal-core)
+[![Coverage Status](https://coveralls.io/repos/github/fractalerp/fractal-core/badge.svg?branch=main)](https://coveralls.io/github/fractalerp/fractal-core?branch=main)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat-square)](https://github.com/fractalerp/fractal-core/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![code style: Tslint Latest](https://img.shields.io/badge/tslint_rules-latest-ff69b4.svg?style=flat-square)](https://github.com/buzinas/tslint-eslint-rules)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ffractalerp%2Ffractal-core.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ffractalerp%2Ffractal-core?ref=badge_shield)
+[![MIT](https://img.shields.io/badge/mit-blue.svg)](http://opensource.org/licenses/mit)
 
-The example shows how you can use [TypeScript](https://typescriptlang.com) on both the server and the client while using [Nodemon](https://nodemon.io/) to live reload the server code without affecting the Next.js universal code.
+[![npm](https://nodei.co/npm/@fractalerp/fractal-core.png)](https://www.npmjs.com/package/@fractalerp/fractal-core)
 
-Server entry point is `server.ts` in development and `dist/server.js` in production.
-The `dist` directory should be added to `.gitignore`.
+[![Download Status](https://img.shields.io/npm/dt/@fractalerp-fractal-core.svg)](https://www.npmjs.com/package/@fractalerp/fractal-core)
 
-## Deploy your own
+Fractal
+----
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/custom-server)
+Fractal is a comprehensive suite of open-source applications designed to empower businesses with flexible and customizable software solutions.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/custom-server)
+These are are the apps we aim to support at the core of fractal
 
-## How to use
+- Financial and Accounting
+- Supply Chain Management
+- Customer Relationship Management
+- Human Resources Management
+- Manufacturing Management
+- Logistics Management
+- Manufacturing Management
+- Inventory Management
+- Warehouse Management
+- Sales Management
+- Marketing Management
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+This is a [Next.js](https://nextjs.org/) project with [Fractal Js](https://github.com/fractalerp/fractal-js) Backend for API calls.
+
+## Getting Started
+
+First, run the development server:
 
 ```bash
-npx create-next-app --example custom-server custom-server-app
+npm run dev
 # or
-yarn create next-app --example custom-server custom-server-app
+yarn dev
 # or
-pnpm create next-app --example custom-server custom-server-app
+pnpm dev
+# or
+bun dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
